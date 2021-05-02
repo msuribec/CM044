@@ -49,17 +49,38 @@ for i=1:p
 end 
 figure;
 scatter(entradas,yss(:,1))
+xlabel('U') 
+ylabel('x1_ss') 
+title('Estabilización de presas vs entrada')
 
 figure;
 scatter(entradas,yss(:,2))
+xlabel('U') 
+ylabel('x1_ss') 
+title('Estabilización de depredadores de primer nivel vs entrada')
 
 figure;
 scatter(entradas,yss(:,3))
+xlabel('U') 
+ylabel('x1_ss') 
+title('Estabilización de depredadores de segundo nivel vs entrada')
 
+figure;
 plot(entradas,yss(:,1))
+xlabel('U') 
+ylabel('x1_ss') 
+title('Estabilización de presas vs entrada')
 
 figure;
 plot(entradas,yss(:,2))
+xlabel('U') 
+ylabel('x1_ss') 
+title('Estabilización de depredadores de primer nivel vs entrada')
+
 
 figure;
 plot(entradas,yss(:,3))
+xlabel('U') 
+ylabel('x1_ss') 
+title('Estabilización de depredadores de segundo nivel vs entrada')
+

@@ -31,7 +31,7 @@ x20 = 175;
 x30 = 200;
 
 
-entradas =[-100:20:100];
+entradas =[100:1:200];
 p = size(entradas,2);
 yss = zeros(p,3);
 
@@ -47,23 +47,23 @@ for i=1:p
     index3 = round(set(3)*100);
     yss(i,:) = [ x(index1,1) x(index2,2) x(index3,3)]; 
 end 
-figure;
-scatter(entradas,yss(:,1))
-xlabel('U') 
-ylabel('x1_ss') 
-title('Estabilización de presas vs entrada')
-
-figure;
-scatter(entradas,yss(:,2))
-xlabel('U') 
-ylabel('x1_ss') 
-title('Estabilización de depredadores de primer nivel vs entrada')
-
-figure;
-scatter(entradas,yss(:,3))
-xlabel('U') 
-ylabel('x1_ss') 
-title('Estabilización de depredadores de segundo nivel vs entrada')
+% figure;
+% scatter(entradas,yss(:,1))
+% xlabel('U') 
+% ylabel('x1_ss') 
+% title('Estabilización de presas vs entrada')
+% 
+% figure;
+% scatter(entradas,yss(:,2))
+% xlabel('U') 
+% ylabel('x1_ss') 
+% title('Estabilización de depredadores de primer nivel vs entrada')
+% 
+% figure;
+% scatter(entradas,yss(:,3))
+% xlabel('U') 
+% ylabel('x1_ss') 
+% title('Estabilización de depredadores de segundo nivel vs entrada')
 
 figure;
 plot(entradas,yss(:,1))

@@ -7,6 +7,9 @@ pred = [0.02 0 0.03];
 cap = [0.22 0 0.1 8640 ];
 ui = [10 0 0];
 
+
+
+
 %% Encontrar ptos equilibrios
 
 r1 = rep(1);
@@ -67,46 +70,35 @@ A_teor = double(A);
 B_teor = double(B);
 %% Linealización con función Linmod
 
-r1 = rep(1);
-r2 = rep(2);
-r3 = rep(3);
+ri = strcat('[',num2str(rep),']');
+K = num2str(cap(4));
+ic =  strcat('[',num2str(pred),']');
+pc =  strcat('[',num2str(cap([1:3])),']');
+ci =  strcat('[',num2str(xe),']');
 
-a = pred(1);
-b = pred(2);
-c = pred(3);
-
-K = cap(4);
-alpha = cap(1);
-beta = cap(2);
-chi = cap(3);
-
-x10 = xe(1);
-x20 = xe(2);
-x30 = xe(3);
-
-U1= ui(1);
-U2= ui(2);
-U3= ui(3);
-
+load_system('LVTresEspecies')
+set_param('LVTresEspecies/eco','ci',ci,'ri',ri,'K',K,'ic',ic,'pc',pc)
+      
 A_num = linmod('LVTresEspecies').a;
-
-
 
 %% Función de transferencia
 
 sys = ss(A_teor,B_teor,C,D);
 figure;
 pzmap(sys)
-
 g=tf(sys);
 
 %% Comparar modelos
 close all;
 
+x10 = xe(1);
 u0 = ui(1);
 delta = 1;
 U1= ui(1) + delta;
 
+load_system('LVLineal')
+set_param('LVLineal/eco', 'ci', ci,'ri', ri, 'K', K, 'ic', ic, ...
+          'pc', pc)
 sim('LVLineal')
 
 hFig = figure;

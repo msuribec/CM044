@@ -6,81 +6,70 @@ rep = [2.84 1.5 0.62];
 pred = [0.02 0 0.03];
 cap = [0.22 0 0.1 8640 ];
 ui = [0 0 0];
+initial_c = [2000 175 200];
 
+ri = strcat('[',num2str(rep),']');
+K = num2str(cap(4));
+ic =  strcat('[',num2str(pred),']');
+pc =  strcat('[',num2str(cap([1:3])),']');
+ci =  strcat('[',num2str(initial_c),']');
 
-r1 = rep(1);
-r2 = rep(2);
-r3 = rep(3);
-
-a = pred(1);
-b = pred(2);
-c = pred(3);
-
-K = cap(4);
-alpha = cap(1);
-beta = cap(2);
-chi = cap(3);
-
+load_system('LVTresEspecies')
+set_param('LVTresEspecies/eco','ci',ci,'ri',ri,'K',K,'ic',ic,'pc',pc)
+     
 U1 = ui(1);
 U2 = ui(2);
 U3 = ui(3);
 
-
-x10 = 2000;
-x20 = 175;
-x30 = 200;
-
-
-entradas =[100:1:200];
+entradas =[0:1:200];
 p = size(entradas,2);
 yss = zeros(p,3);
 
 for i=1:p
-    U1 = entradas(i);
+    U2 = entradas(i);
     sim('LVTresEspecies');
-    set1 = stepinfo(x(:,1),t,'SettlingTimeThreshold',0.05).SettlingTime;
-    set2 = stepinfo(x(:,2),t,'SettlingTimeThreshold',0.05).SettlingTime;
-    set3 = stepinfo(x(:,3),t,'SettlingTimeThreshold',0.05).SettlingTime;
-    set = [ round(set1,2) round(set2,2) round(set3,2)];
-    index1 = round(set(1)*100);
-    index2 = round(set(2)*100);
-    index3 = round(set(3)*100);
-    yss(i,:) = [ x(index1,1) x(index2,2) x(index3,3)]; 
+    yss(i,:) = x(end,:);
 end 
-% figure;
-% scatter(entradas,yss(:,1))
-% xlabel('U') 
-% ylabel('x1_ss') 
-% title('Estabilización de presas vs entrada')
-% 
-% figure;
-% scatter(entradas,yss(:,2))
-% xlabel('U') 
-% ylabel('x1_ss') 
-% title('Estabilización de depredadores de primer nivel vs entrada')
-% 
-% figure;
-% scatter(entradas,yss(:,3))
-% xlabel('U') 
-% ylabel('x1_ss') 
-% title('Estabilización de depredadores de segundo nivel vs entrada')
+in =[5:15];
+tbl = table(entradas(in)',yss(in,1),yss(in,2),yss(in,3));
+tbl.Properties.VariableNames{'Var1'} = 'U';
+tbl.Properties.VariableNames{'Var2'} = 'x1';
+tbl.Properties.VariableNames{'Var3'} = 'x2';
+tbl.Properties.VariableNames{'Var4'} = 'x3';
+
+mdl1 = fitlm(tbl,'x1 ~ U');
+coef1=mdl1.Coefficients.Estimate;
 
 figure;
 plot(entradas,yss(:,1))
+hold on;
+plot(entradas,entradas*coef1(2)+coef1(1));
 xlabel('U') 
-ylabel('x1_ss') 
-title('Estabilización de presas vs entrada')
+xlabel('tasa de ingreso de depredadores de primer nivel') 
+ylabel('x1_{ss}') 
+title('Estabilización de presas vs entrada(tasa de ingreso de depredadores de primer nivel)')
+
+
+mdl2 = fitlm(tbl,'x2 ~ U');
+coef2=mdl2.Coefficients.Estimate;
 
 figure;
 plot(entradas,yss(:,2))
-xlabel('U') 
-ylabel('x1_ss') 
-title('Estabilización de depredadores de primer nivel vs entrada')
+hold on;
+plot(entradas,entradas*coef2(2)+coef2(1));
+xlabel('tasa de ingreso de depredadores de primer nivel') 
+ylabel('x2_{ss}') 
+title('Estabilización de depredadores de primer nivel vs entrada (tasa de ingreso de depredadores de primer nivel)')
 
+
+mdl3 = fitlm(tbl,'x3 ~ U');
+coef3=mdl3.Coefficients.Estimate;
 
 figure;
 plot(entradas,yss(:,3))
-xlabel('U') 
-ylabel('x1_ss') 
-title('Estabilización de depredadores de segundo nivel vs entrada')
+hold on;
+plot(entradas,entradas*coef3(2)+coef3(1));
+xlabel('tasa de ingreso de depredadores de primer nivel') 
+ylabel('x3_{ss}') 
+title('Estabilización de depredadores de segundo nivel vs entrada (tasa de ingreso de depredadores de primer nivel)')
 

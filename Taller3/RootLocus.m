@@ -1,4 +1,4 @@
-%% Lugar de las raíces continuo
+%% Método lugar de las raíces continuo
 
 clear all; close all; clc;
 
@@ -8,7 +8,7 @@ Gc = (s^2 + .8516*s + .1436)/(s^3 + 2.267*s^2 + 4.884*s + 2.3)
 
 rlocus(Gc)
 
-%% Lugar de las raíces discreto
+%% Método lugar de las raíces discreto
 
 clear all; close all; clc;
 

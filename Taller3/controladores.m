@@ -1,13 +1,40 @@
 %% ROUTH HURWITZ
 syms K
-[M, L]=routh_hurwitz([1 K 1.731*K 0.93*K+1]);
+[M, L]=routh_hurwitz([1 2.267+K 4.884+0.8516*K 2.3+0.1436*K]);
 L1 = simplify(L);
 L2 = expand(L1);
 
 
-sys = tf([1 1.731 0.93],[1 2.005 4.284 2.04]);
+sys = tf([1 0.8516 0.1436],[1 2.267 4.884 2.3]);
 sysd = c2d(sys,1);
 syms s k;
 
-g = (k*(s^2+1.731*s +0.93))/(1+ k*(s^3 + 2.005*s^2 + 4.284*s + 2.04));
-[num den]= numden(g);
+
+%%
+clc; clear all;
+syms k z s;
+
+P(z) = z^3 + (0.2956*k - 0.3689)* z^2 + (0.08454 - 0.3703*k)* z - 0.1036  + 0.113*k;
+P(z) = subs(P, z, (1+s)/(1-s));
+simplify(P)
+% [Md, Ld]=routh_hurwitz([]);
+% L1d = simplify(Ld);
+% L2d = expand(L1d);
+
+
+
+%%
+
+clc;clear all;
+
+Ref = 130.4203;
+figure;
+names = [];
+for K = 0.05:0.05:1
+    sim('ControladorContinuo')
+    plot(t,y,'DisplayName',strcat('K = ',num2str(K)));
+    hold on;
+end
+xlabel('Tiempo') 
+ylabel('y_{lc}') 
+legend

@@ -22,19 +22,3 @@ simplify(P)
 % L2d = expand(L1d);
 
 
-
-%%
-
-clc;clear all;
-
-Ref = 130.4203;
-figure;
-names = [];
-for K = 0.05:0.05:1
-    sim('ControladorContinuo')
-    plot(t,y,'DisplayName',strcat('K = ',num2str(K)));
-    hold on;
-end
-xlabel('Tiempo') 
-ylabel('y_{lc}') 
-legend

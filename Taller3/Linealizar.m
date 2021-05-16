@@ -200,4 +200,25 @@ ylabel('Respuesta temporal')
 legend('Controlador modelo lineal','Controlador modelo NL')
 title('Respuesta de los sistemas (lineal y no lineal) con el controlador k continuo ')
 
+%% Controlador discreto
 
+close all;
+
+ref = 0.0006;
+deltax = 0;
+deltau = 0.05;
+x20 = xe(2)+ deltax;
+u0 = ui(2);
+U2= ui(2) + deltau;
+k = -2;
+
+sim('ControladorDiscreto')
+
+plot(t,y(:,1))
+hold on
+plot(t,y(:,2))
+
+xlabel('Tiempo') 
+ylabel('Respuesta temporal') 
+legend('Controlador modelo lineal','Controlador modelo NL')
+title('Respuesta de los sistemas (lineal y no lineal) con el controlador k discreto ')

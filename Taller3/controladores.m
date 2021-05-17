@@ -14,28 +14,12 @@ syms s k;
 
 clear all; close all; clc;
 
-syms k s z
-sympref('FloatingPointOutput',true);
+% Simplificación realizada en Symbolab
 
-z = (1+s)/(1-s);
-P = z^3 + (0.009929*k-2.977)*z^2 + (2.955-0.01977*k)*z - 0.9776 + 0.0099845*k;
-Q = simplifyFraction(vpa(P));
-[n, d] = numden(Q);
-n = collect(n, [s^3,s^2,s,1]); % Factorización por agrupación
+syms k
 
-% Extracción de coeficientes
-c(1) = children(children(n,1),1);
-c(2) = children(children(n,2),1);
-c(3) = children(children(n,3),1);
-c(4) = children(n,4);
-
-pretty(n/d)
--n
--c
-
-[M, L] = routh_hurwitz(-c);
-M
-SL = L;
-SL(4) = SL(3);
-simplify(SL)
-expand(SL)
+c = [7.9096-0.0396835*k, 0.0397945*k+0.0892, 0.0008-0.0002545*k, ...
+     0.0001435*k+0.0004];
+[M, L] = routh_hurwitz(c);
+M_ans = vpa(M,4)
+L_ans = vpa(L,4)

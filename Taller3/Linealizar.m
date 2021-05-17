@@ -210,7 +210,7 @@ deltau = 0.05;
 x20 = xe(2)+ deltax;
 u0 = ui(2);
 U2= ui(2) + deltau;
-k = -2;
+k = 1;
 
 sim('ControladorDiscreto')
 

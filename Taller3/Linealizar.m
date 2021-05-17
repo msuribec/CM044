@@ -210,7 +210,12 @@ deltau = 0.05;
 x20 = xe(2)+ deltax;
 u0 = ui(2);
 U2= ui(2) + deltau;
-k = 1;
+k = -2;
+sys = tf([1 0.8516 0.1436],[1 2.267 4.884 2.3]);
+sysd = c2d(sys,0.01);
+[num, den] = tfdata(sysd);
+num = cell2mat(num);
+den = cell2mat(den);
 
 sim('ControladorDiscreto')
 

@@ -16,4 +16,4 @@ clear all; close all; clc;
 G = tf([1 0.8516 0.1436],[1 2.267 4.884 2.3]);
 Gd = c2d(G,0.01);
 
-rlocus(Gd) 
+rlocus(Gd)

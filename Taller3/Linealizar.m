@@ -93,7 +93,7 @@ close all;
 
 x20 = xe(2);
 u0 = ui(2);
-deltau = 0.05;
+deltau = 40;
 U2= ui(2) + deltau;
 
 A = strcat('[',num2str(A_num(1,:)),';',num2str(A_num(2,:)),';',num2str(A_num(3,:)),']');
@@ -141,7 +141,7 @@ plot(t,linx2)
 legend('Modelo No lineal','Modelo Lineal')
 xlabel('Tiempo') 
 ylabel('Población') 
-title('Población de presas vs tiempo')
+title('Población de depredadores de primer nivel vs tiempo')
 
 
 %% Comparación con entrada sinusoidal
@@ -152,7 +152,7 @@ delete_line('LVLineal','u2/1','Sum/1');
 delete_line('LVLineal','u2/1','Mux1/2');
 delete_block('LVLineal/u2')
 add_block('simulink/Sources/Sine Wave','LVLineal/u2');
-amp = 1;
+amp = 60;
 set_param('LVLineal/u2','Amplitude',num2str(amp),'Bias',num2str(u0))
     
 add_line('LVLineal','u2/1','eco/2');
@@ -169,7 +169,7 @@ plot(t,linx2)
 legend('Modelo No lineal','Modelo Lineal')
 xlabel('Tiempo') 
 ylabel('Población') 
-title('Población de presas vs tiempo')
+title('Población de depredadores de primer nivel vs tiempo')
 
 subplot(2,1,2)
 plot(t,u(:,2))
